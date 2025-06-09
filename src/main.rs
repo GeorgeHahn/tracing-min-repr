@@ -2,7 +2,7 @@ use std::time::Duration;
 use tracing::info;
 
 fn main() {
-    tracing_subscriber::fmt::init();
+    tracing_subscriber::fmt().with_env_filter("trace").init();
 
     let rt = tokio::runtime::Builder::new_multi_thread()
         .enable_all()
