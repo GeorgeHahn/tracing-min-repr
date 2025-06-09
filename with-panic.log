@@ -1,0 +1,161 @@
+cargo run
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.07s
+     Running `target/debug/min-repr-tracing-span`
+2025-06-09T18:04:42.131080Z  INFO top_level_task: min_repr_tracing_span: new
+2025-06-09T18:04:42.131129Z  INFO top_level_task: min_repr_tracing_span: enter
+2025-06-09T18:04:42.131144Z  INFO top_level_task: min_repr_tracing_span: Spawn task capturing parent span
+2025-06-09T18:04:42.131176Z  INFO top_level_task: min_repr_tracing_span: exit
+2025-06-09T18:04:42.131184Z  INFO top_level_task: min_repr_tracing_span: enter
+2025-06-09T18:04:42.131190Z  INFO top_level_task: min_repr_tracing_span: exit
+2025-06-09T18:04:42.131201Z  INFO min_repr_tracing_span: Inner main finished, waiting for shutdown
+2025-06-09T18:04:42.131213Z  INFO top_level_task: min_repr_tracing_span: enter
+2025-06-09T18:04:42.131242Z  INFO top_level_task:child_of_current: min_repr_tracing_span: new
+2025-06-09T18:04:42.131253Z  INFO top_level_task:child_of_current: min_repr_tracing_span: enter
+2025-06-09T18:04:42.131264Z  INFO top_level_task:child_of_current: min_repr_tracing_span: Child of current span
+2025-06-09T18:04:42.131275Z  INFO top_level_task:child_of_current: min_repr_tracing_span: exit
+2025-06-09T18:04:42.131283Z  INFO top_level_task:child_of_current: min_repr_tracing_span: enter
+2025-06-09T18:04:42.131291Z  INFO top_level_task:child_of_current: min_repr_tracing_span: exit
+2025-06-09T18:04:42.131303Z  INFO top_level_task:child_of_current: min_repr_tracing_span: close time.busy=30.4µs time.idle=31.8µs
+2025-06-09T18:04:42.131319Z  INFO top_level_task: min_repr_tracing_span: exit
+2025-06-09T18:04:42.131326Z  INFO top_level_task: min_repr_tracing_span: enter
+2025-06-09T18:04:42.131333Z  INFO top_level_task: min_repr_tracing_span: exit
+2025-06-09T18:04:42.131343Z  INFO top_level_task:child_operation1: min_repr_tracing_span: new
+2025-06-09T18:04:42.131353Z  INFO top_level_task:child_operation1: min_repr_tracing_span: close time.busy=0.00ns time.idle=9.71µs
+2025-06-09T18:04:42.131366Z  INFO top_level_task: min_repr_tracing_span: close time.busy=168µs time.idle=135µs
+
+thread 'tokio-runtime-worker' panicked at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-subscriber-0.3.19/src/registry/sharded.rs:311:32:
+tried to clone Id(1), but no span exists with that ID
+This may be caused by consuming a parent span (`parent: span`) rather than borrowing it (`parent: &span`).
+stack backtrace:
+   0: __rustc::rust_begin_unwind
+             at /rustc/17067e9ac6d7ecb70e50f92c1944e545188d2359/library/std/src/panicking.rs:697:5
+   1: core::panicking::panic_fmt
+             at /rustc/17067e9ac6d7ecb70e50f92c1944e545188d2359/library/core/src/panicking.rs:75:14
+   2: <tracing_subscriber::registry::sharded::Registry as tracing_core::subscriber::Subscriber>::clone_span::{{closure}}
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-subscriber-0.3.19/src/registry/sharded.rs:311:32
+   3: core::option::Option<T>::unwrap_or_else
+             at /Users/me/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/option.rs:1023:21
+   4: <tracing_subscriber::registry::sharded::Registry as tracing_core::subscriber::Subscriber>::clone_span
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-subscriber-0.3.19/src/registry/sharded.rs:309:20
+   5: <tracing_subscriber::registry::sharded::Registry as tracing_core::subscriber::Subscriber>::new_span::{{closure}}
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-subscriber-0.3.19/src/registry/sharded.rs:243:37
+   6: core::option::Option<T>::map
+             at /Users/me/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/option.rs:1119:29
+   7: <tracing_subscriber::registry::sharded::Registry as tracing_core::subscriber::Subscriber>::new_span
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-subscriber-0.3.19/src/registry/sharded.rs:243:13
+   8: <tracing_subscriber::layer::layered::Layered<L,S> as tracing_core::subscriber::Subscriber>::new_span
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-subscriber-0.3.19/src/layer/layered.rs:126:18
+   9: <tracing_subscriber::layer::layered::Layered<L,S> as tracing_core::subscriber::Subscriber>::new_span
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-subscriber-0.3.19/src/layer/layered.rs:126:18
+  10: tracing_core::dispatcher::Dispatch::new_span
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-core-0.1.34/src/dispatcher.rs:558:9
+  11: tracing::span::Span::make_with
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-0.1.41/src/span.rs:569:18
+  12: tracing::span::Span::child_of_with
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-0.1.41/src/span.rs:507:9
+  13: tracing::span::Span::child_of::{{closure}}
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-0.1.41/src/span.rs:491:13
+  14: tracing_core::dispatcher::get_default
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-core-0.1.34/src/dispatcher.rs:388:16
+  15: tracing::span::Span::child_of
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-0.1.41/src/span.rs:490:9
+  16: min_repr_tracing_span::top_level_task::{{closure}}::{{closure}}::{{closure}}
+             at ./src/main.rs:73:9
+  17: tokio::runtime::task::core::Core<T,S>::poll::{{closure}}
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/task/core.rs:331:17
+  18: tokio::loom::std::unsafe_cell::UnsafeCell<T>::with_mut
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/loom/std/unsafe_cell.rs:16:9
+  19: tokio::runtime::task::core::Core<T,S>::poll
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/task/core.rs:320:13
+  20: tokio::runtime::task::harness::poll_future::{{closure}}
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/task/harness.rs:532:19
+  21: <core::panic::unwind_safe::AssertUnwindSafe<F> as core::ops::function::FnOnce<()>>::call_once
+             at /Users/me/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/panic/unwind_safe.rs:272:9
+  22: std::panicking::try::do_call
+             at /Users/me/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panicking.rs:589:40
+  23: ___rust_try
+  24: std::panicking::try
+             at /Users/me/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panicking.rs:552:19
+  25: std::panic::catch_unwind
+             at /Users/me/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panic.rs:359:14
+  26: tokio::runtime::task::harness::poll_future
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/task/harness.rs:520:18
+  27: tokio::runtime::task::harness::Harness<T,S>::poll_inner
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/task/harness.rs:209:27
+  28: tokio::runtime::task::harness::Harness<T,S>::poll
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/task/harness.rs:154:15
+  29: tokio::runtime::task::raw::poll
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/task/raw.rs:271:5
+  30: tokio::runtime::task::raw::RawTask::poll
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/task/raw.rs:201:18
+  31: tokio::runtime::task::LocalNotified<S>::run
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/task/mod.rs:463:9
+  32: tokio::runtime::scheduler::multi_thread::worker::Context::run_task::{{closure}}
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/scheduler/multi_thread/worker.rs:600:13
+  33: tokio::task::coop::with_budget
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/task/coop/mod.rs:167:5
+  34: tokio::task::coop::budget
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/task/coop/mod.rs:133:5
+  35: tokio::runtime::scheduler::multi_thread::worker::Context::run_task
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/scheduler/multi_thread/worker.rs:594:9
+  36: tokio::runtime::scheduler::multi_thread::worker::Context::run
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/scheduler/multi_thread/worker.rs:542:24
+  37: tokio::runtime::scheduler::multi_thread::worker::run::{{closure}}::{{closure}}
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/scheduler/multi_thread/worker.rs:507:21
+  38: tokio::runtime::context::scoped::Scoped<T>::set
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/context/scoped.rs:40:9
+  39: tokio::runtime::context::set_scheduler::{{closure}}
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/context.rs:176:26
+  40: std::thread::local::LocalKey<T>::try_with
+             at /Users/me/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/thread/local.rs:311:12
+  41: std::thread::local::LocalKey<T>::with
+             at /Users/me/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/thread/local.rs:275:15
+  42: tokio::runtime::context::set_scheduler
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/context.rs:176:9
+  43: tokio::runtime::scheduler::multi_thread::worker::run::{{closure}}
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/scheduler/multi_thread/worker.rs:502:9
+  44: tokio::runtime::context::runtime::enter_runtime
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/context/runtime.rs:65:16
+  45: tokio::runtime::scheduler::multi_thread::worker::run
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/scheduler/multi_thread/worker.rs:494:5
+  46: tokio::runtime::scheduler::multi_thread::worker::Launch::launch::{{closure}}
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/scheduler/multi_thread/worker.rs:460:45
+  47: <tokio::runtime::blocking::task::BlockingTask<T> as core::future::future::Future>::poll
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/blocking/task.rs:42:21
+  48: tokio::runtime::task::core::Core<T,S>::poll::{{closure}}
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/task/core.rs:331:17
+  49: tokio::loom::std::unsafe_cell::UnsafeCell<T>::with_mut
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/loom/std/unsafe_cell.rs:16:9
+  50: tokio::runtime::task::core::Core<T,S>::poll
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/task/core.rs:320:13
+  51: tokio::runtime::task::harness::poll_future::{{closure}}
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/task/harness.rs:532:19
+  52: <core::panic::unwind_safe::AssertUnwindSafe<F> as core::ops::function::FnOnce<()>>::call_once
+             at /Users/me/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/panic/unwind_safe.rs:272:9
+  53: std::panicking::try::do_call
+             at /Users/me/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panicking.rs:589:40
+  54: ___rust_try
+  55: std::panicking::try
+             at /Users/me/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panicking.rs:552:19
+  56: std::panic::catch_unwind
+             at /Users/me/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panic.rs:359:14
+  57: tokio::runtime::task::harness::poll_future
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/task/harness.rs:520:18
+  58: tokio::runtime::task::harness::Harness<T,S>::poll_inner
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/task/harness.rs:209:27
+  59: tokio::runtime::task::harness::Harness<T,S>::poll
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/task/harness.rs:154:15
+  60: tokio::runtime::task::raw::poll
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/task/raw.rs:271:5
+  61: tokio::runtime::task::raw::RawTask::poll
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/task/raw.rs:201:18
+  62: tokio::runtime::task::UnownedTask<S>::run
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/task/mod.rs:500:9
+  63: tokio::runtime::blocking::pool::Task::run
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/blocking/pool.rs:161:9
+  64: tokio::runtime::blocking::pool::Inner::run
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/blocking/pool.rs:511:17
+  65: tokio::runtime::blocking::pool::Spawner::spawn_thread::{{closure}}
+             at /Users/me/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.45.1/src/runtime/blocking/pool.rs:469:13
+note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
+2025-06-09T18:04:42.150650Z  INFO min_repr_tracing_span: Shutdown complete

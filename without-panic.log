@@ -1,0 +1,14 @@
+✗ cargo run
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.08s
+     Running `target/debug/min-repr-tracing-span`
+2025-06-09T18:06:18.561120Z  INFO top_level_task: min_repr_tracing_span: new
+2025-06-09T18:06:18.561164Z  INFO top_level_task: min_repr_tracing_span: enter
+2025-06-09T18:06:18.561238Z  INFO top_level_task: min_repr_tracing_span: Spawn task capturing parent span
+2025-06-09T18:06:18.561284Z  INFO top_level_task: min_repr_tracing_span: exit
+2025-06-09T18:06:18.561293Z  INFO top_level_task: min_repr_tracing_span: enter
+2025-06-09T18:06:18.561300Z  INFO top_level_task: min_repr_tracing_span: exit
+2025-06-09T18:06:18.561310Z  INFO min_repr_tracing_span: Inner main finished, waiting for shutdown
+2025-06-09T18:06:18.561357Z  INFO top_level_task: min_repr_tracing_span: enter
+2025-06-09T18:06:18.561370Z  INFO top_level_task: min_repr_tracing_span: exit
+2025-06-09T18:06:18.561381Z  INFO top_level_task: min_repr_tracing_span: close time.busy=142µs time.idle=135µs
+2025-06-09T18:06:18.562105Z  INFO min_repr_tracing_span: Shutdown complete
