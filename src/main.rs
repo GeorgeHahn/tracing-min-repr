@@ -33,6 +33,8 @@ async fn inner_task(
     info!("Spawn from inner task");
 
     tokio::spawn(async move {
+        // Successful runs don't show this message:
+        info!("Child task waiting");
         wait_for_top_level_exit.await.unwrap();
 
         // Panics if it runs: receiver has been dropped
