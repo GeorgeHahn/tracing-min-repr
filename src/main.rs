@@ -2,23 +2,23 @@ use std::time::Duration;
 use tracing::info;
 
 fn main() {
+    tracing_subscriber::fmt::init();
+
     let rt = tokio::runtime::Builder::new_multi_thread()
         .enable_all()
         .build()
         .unwrap();
 
-    tracing_subscriber::fmt::init();
-
-    rt.block_on(reproduce_span_outlives_parent_panic());
-    info!("Inner main finished, waiting for shutdown");
+    rt.block_on(top_level_task());
+    info!("Top level task finished, waiting for shutdown");
     rt.shutdown_timeout(Duration::from_secs(10));
     info!("Shutdown complete");
 }
 
-async fn reproduce_span_outlives_parent_panic() {
+async fn top_level_task() {
     let (top_level_exited, rx) = tokio::sync::oneshot::channel();
     let (child_complete, child_rx) = tokio::sync::oneshot::channel();
-    top_level_task(rx, child_complete).await;
+    inner_task(rx, child_complete).await;
     top_level_exited.send(()).unwrap();
 
     // With this line commented out, about three quarters of runs do not finish the spawned task below.
@@ -26,11 +26,11 @@ async fn reproduce_span_outlives_parent_panic() {
 }
 
 #[tracing::instrument(skip_all)]
-async fn top_level_task(
+async fn inner_task(
     wait_for_top_level_exit: tokio::sync::oneshot::Receiver<()>,
     child_complete: tokio::sync::oneshot::Sender<()>,
 ) {
-    info!("Spawn task capturing parent span");
+    info!("Spawn from inner task");
 
     tokio::spawn(async move {
         wait_for_top_level_exit.await.unwrap();
